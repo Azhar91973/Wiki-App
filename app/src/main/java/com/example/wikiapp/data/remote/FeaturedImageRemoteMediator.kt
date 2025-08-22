@@ -37,7 +37,7 @@ class FeaturedImageRemoteMediator(
 
                 }
             }
-            val response = api.getFeaturedImages(gcmcontinue = pageKey)
+            val response = retryWithBackoff{ api.getFeaturedImages(gcmcontinue = pageKey) }
             // mapping the response to FeaturedImageEntity
             val images = response.query?.pages?.values?.map { page ->
                 val info = page.imageinfo?.firstOrNull()

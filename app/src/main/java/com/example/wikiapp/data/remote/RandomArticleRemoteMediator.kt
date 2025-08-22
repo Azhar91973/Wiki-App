@@ -37,11 +37,13 @@ class RandomArticleRemoteMediator(
                     remoteKeys
                 }
             }
-            val response = api.getRandomArticles(
-                imContinue = pageKey?.imContinue,
-                grnContinue = pageKey?.grnContinue,
-                cont = pageKey?.continueToken
-            )
+            val response = retryWithBackoff {
+                api.getRandomArticles(
+                    imContinue = pageKey?.imContinue,
+                    grnContinue = pageKey?.grnContinue,
+                    cont = pageKey?.continueToken
+                )
+            }
             val articles = response.query?.pages?.map { pages ->
                 RandomArticleEntity(
                     pageId = pages.value.pageid,

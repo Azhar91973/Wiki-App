@@ -37,7 +37,7 @@ class CategoriesRemoteMediator(
 
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             }
-            val response = api.getCategories(accontinue = loadKey)
+            val response = retryWithBackoff { api.getCategories(accontinue = loadKey) }
             // mapping the response to CategoryEntity
             val categories = response.query.allcategories.map { cat ->
                 CategoryEntity(category = cat.category)
@@ -51,7 +51,11 @@ class CategoriesRemoteMediator(
                     categoryRemoteKeyDao.clearAll()
                 }
                 // inserting the remoteKey into the db
-                categoryRemoteKeyDao.insertOrReplace(CategoryRemoteKeyEntity(CATEGORY_REMOTE_KEY, nextPage))
+                categoryRemoteKeyDao.insertOrReplace(
+                    CategoryRemoteKeyEntity(
+                        CATEGORY_REMOTE_KEY, nextPage
+                    )
+                )
                 // inserting the categories into the db
                 categoryDao.insertAll(categories)
             }
