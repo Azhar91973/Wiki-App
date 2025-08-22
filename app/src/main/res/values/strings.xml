@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WikiApp</string>
+    <string name="an_error_occurred">An error occurred</string>
+    <string name="retry">Retry</string>
+    <string name="setting">Settings</string>
+    <string name="theme">Switch to Dark Mode</string>
+    <string name="article_id">Article Id</string>
+    <string name="article_title">Article Title</string>
+    <string name="article_description">Article Description</string>
+    <string name="featured_image">Featured image</string>
+    <string name="image_title">Image Title</string>
+    <string name="name">Name</string>
+    <string name="time_stamp">Time Stamp</string>
+    <string name="category_text">Category Text</string>
+</resources>
