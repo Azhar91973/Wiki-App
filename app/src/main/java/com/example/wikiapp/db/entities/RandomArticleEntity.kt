@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "random_articles")
 data class RandomArticleEntity(
-    @PrimaryKey(autoGenerate = false) val pageId: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val pageId: Int,
     val title: String,
     val content: String?,
     val imageUrl: String?

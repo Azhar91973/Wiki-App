@@ -16,7 +16,7 @@ class CategoryAdapter : PagingDataAdapter<CategoryEntity, CategoryViewHolder>(DI
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CategoryEntity>() {
             override fun areItemsTheSame(
                 oldItem: CategoryEntity, newItem: CategoryEntity
-            ): Boolean = oldItem.category == newItem.category
+            ): Boolean = oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: CategoryEntity, newItem: CategoryEntity

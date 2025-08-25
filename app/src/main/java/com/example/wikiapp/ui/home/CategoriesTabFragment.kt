@@ -40,9 +40,8 @@ class CategoriesTabFragment : BaseFragment<FragmentTabBinding>() {
         rvAdapter = CategoryAdapter()
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = rvAdapter.withLoadStateFooter(LoadStateAdapter {
-                rvAdapter.retry()
-            })
+            setHasFixedSize(true)
+            adapter = rvAdapter.withLoadStateFooter(LoadStateAdapter(retry = { rvAdapter.retry() }))
         }
     }
 

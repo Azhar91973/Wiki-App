@@ -1,7 +1,6 @@
 package com.example.wikiapp.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,9 +41,8 @@ class FeaturedImagesTabFragment : BaseFragment<FragmentTabBinding>() {
         rvAdapter = FeaturedImageAdapter()
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = rvAdapter.withLoadStateFooter(footer = LoadStateAdapter { rvAdapter.retry() })
-
-
+            setHasFixedSize(true)
+            adapter = rvAdapter.withLoadStateFooter(LoadStateAdapter(retry = { rvAdapter.retry() }))
         }
     }
 

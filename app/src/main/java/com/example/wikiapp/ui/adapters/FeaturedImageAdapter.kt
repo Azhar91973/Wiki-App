@@ -21,7 +21,7 @@ class FeaturedImageAdapter : PagingDataAdapter<FeaturedImageEntity, FeaturedImag
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FeaturedImageEntity>() {
             override fun areItemsTheSame(
                 oldItem: FeaturedImageEntity, newItem: FeaturedImageEntity
-            ): Boolean = oldItem.pageId == newItem.pageId
+            ): Boolean = oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: FeaturedImageEntity, newItem: FeaturedImageEntity

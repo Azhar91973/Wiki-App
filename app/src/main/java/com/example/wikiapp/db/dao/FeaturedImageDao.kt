@@ -15,6 +15,9 @@ interface FeaturedImageDao {
     @Query("SELECT * FROM featured_images")
     fun pagingSource(): PagingSource<Int, FeaturedImageEntity>
 
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'featured_images'")
+    suspend fun deletePrimaryKeyIndex()
+
     @Query("DELETE FROM featured_images")
     suspend fun clearAll()
 }

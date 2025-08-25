@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "featured_images")
 data class FeaturedImageEntity(
-    @PrimaryKey(autoGenerate = false) val pageId: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val pageId: Int,
     val title: String,
     val user: String,
     val timestamp: String,

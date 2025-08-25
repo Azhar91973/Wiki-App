@@ -37,13 +37,11 @@ class RandomArticleRemoteMediator(
                     remoteKeys
                 }
             }
-            val response = retryWithBackoff {
-                api.getRandomArticles(
-                    imContinue = pageKey?.imContinue,
-                    grnContinue = pageKey?.grnContinue,
-                    cont = pageKey?.continueToken
-                )
-            }
+            val response = api.getRandomArticles(
+                imContinue = pageKey?.imContinue,
+                grnContinue = pageKey?.grnContinue,
+                cont = pageKey?.continueToken
+            )
             val articles = response.query?.pages?.map { pages ->
                 RandomArticleEntity(
                     pageId = pages.value.pageid,
@@ -60,6 +58,7 @@ class RandomArticleRemoteMediator(
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     randomArticleDao.clearAll()
+                    randomArticleDao.deletePrimaryKeyIndex() // re-setting the pk value
                     randomArticleRemoteKeyDao.clearRemoteKeys()
                 }
                 randomArticleDao.insertAll(articles)

@@ -11,8 +11,12 @@ import com.example.wikiapp.db.entities.CategoryEntity
 interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(categories: List<CategoryEntity>)
+
     @Query("SELECT * FROM categories")
     fun pagingSource(): PagingSource<Int, CategoryEntity>
+
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'categories'")
+    suspend fun deletePrimaryKeyIndex()
 
     @Query("DELETE FROM categories")
     suspend fun clearAll()

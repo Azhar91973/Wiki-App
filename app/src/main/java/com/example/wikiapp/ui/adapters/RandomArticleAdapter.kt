@@ -19,7 +19,7 @@ class RandomArticleAdapter :
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<RandomArticleEntity>() {
             override fun areItemsTheSame(
                 oldItem: RandomArticleEntity, newItem: RandomArticleEntity
-            ): Boolean = oldItem.pageId == newItem.pageId
+            ): Boolean = oldItem.id == newItem.id
 
             override fun areContentsTheSame(
                 oldItem: RandomArticleEntity, newItem: RandomArticleEntity

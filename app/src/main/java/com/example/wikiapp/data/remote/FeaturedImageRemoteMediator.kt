@@ -37,7 +37,7 @@ class FeaturedImageRemoteMediator(
 
                 }
             }
-            val response = retryWithBackoff{ api.getFeaturedImages(gcmcontinue = pageKey) }
+            val response = api.getFeaturedImages(gcmcontinue = pageKey)
             // mapping the response to FeaturedImageEntity
             val images = response.query?.pages?.values?.map { page ->
                 val info = page.imageinfo?.firstOrNull()
@@ -55,6 +55,7 @@ class FeaturedImageRemoteMediator(
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     db.featuredImageDao().clearAll()
+                    db.featuredImageDao().deletePrimaryKeyIndex()  // re-setting the pk value
                     db.featuredImageRemoteKeysDao().clearRemoteKeys()
                 }
                 // inserting the images into the db
@@ -69,7 +70,7 @@ class FeaturedImageRemoteMediator(
             }
             MediatorResult.Success(endOfPaginationReached = nextPage == null)
         } catch (e: Exception) {
-            Log.e("RemoteMediator", "Error fetching data: ${e.message}", e)
+            Log.e("FeaturedRemoteMediator", "Error fetching data: ${e.message}", e)
             MediatorResult.Error(e)
         }
     }

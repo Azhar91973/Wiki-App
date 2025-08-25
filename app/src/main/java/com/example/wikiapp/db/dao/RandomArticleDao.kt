@@ -15,6 +15,9 @@ interface RandomArticleDao {
     @Query("SELECT * FROM random_articles")
     fun pagingSource(): PagingSource<Int, RandomArticleEntity>
 
+    @Query("DELETE FROM sqlite_sequence WHERE name = 'random_articles'")
+    suspend fun deletePrimaryKeyIndex()
+
     @Query("DELETE FROM random_articles")
     suspend fun clearAll()
 }

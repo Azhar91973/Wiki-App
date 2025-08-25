@@ -1,6 +1,8 @@
 package com.example.wikiapp.data.remote
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -37,7 +39,7 @@ class CategoriesRemoteMediator(
 
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
             }
-            val response = retryWithBackoff { api.getCategories(accontinue = loadKey) }
+            val response = api.getCategories(accontinue = loadKey)
             // mapping the response to CategoryEntity
             val categories = response.query.allcategories.map { cat ->
                 CategoryEntity(category = cat.category)
@@ -48,6 +50,7 @@ class CategoriesRemoteMediator(
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     categoryDao.clearAll()
+                    categoryDao.deletePrimaryKeyIndex()  // re-setting the pk value
                     categoryRemoteKeyDao.clearAll()
                 }
                 // inserting the remoteKey into the db
